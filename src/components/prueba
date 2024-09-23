@@ -1,0 +1,62 @@
+import { Box, Button } from "@chakra-ui/react"
+import React, { useState } from "react"
+import Header from "./header"
+import Axios from "../utils/axiosConfig"
+
+function Main (){
+
+    const [query, setQuery] = useState('')
+    const [res, setRes] = useState('')
+
+    function handleChange(e) {
+        setQuery(e.target.value)
+    }
+
+    async function handleSubmit(e) {
+        e.preventDefault()
+        console.log(query);
+        const response = await Axios.post('/query', { 'question': query })
+        console.log(response.data.response);
+        setRes(response.data.response)
+        setQuery('')
+    }
+
+    return (
+        <>
+            <Box
+                className="main-container"
+                width='80%'
+                minHeight='100vh' // Hace que ocupe toda la pantalla
+                display='flex'
+                flexDirection='column'
+            >
+                <Header />
+                <Box
+                    display='flex'
+                    flexDirection='column'
+                    flex='1' // Asegura que este contenedor ocupe todo el espacio restante
+                >
+                    <Box
+                        className="chat-box"
+                        flexGrow='1' // Esto permite que el chat-box crezca para llenar el espacio restante
+                        border='1px solid gray' // Opcional: añadir un borde para distinguirlo
+                        padding='1rem'
+                        overflowY='auto' // Permite desplazarse si el contenido es grande
+                    >
+                        {res}
+                    </Box>
+                    <form onSubmit={handleSubmit}>
+                        <input
+                            type="text"
+                            onChange={handleChange}
+                            value={query}
+                        />
+                        <Button type="submit">ENVIAR</Button>
+                    </form>
+                </Box>
+            </Box>
+        </>
+    )
+}
+
+export default Main
