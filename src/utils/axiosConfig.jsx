@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-    baseURL:"https://chatutelvt.onrender.com",
+    baseURL:"https://api-chatutelvt.onrender.com",
     headers:{
         "Content-Type": "application/json"
     }
