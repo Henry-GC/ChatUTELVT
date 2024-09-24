@@ -10,7 +10,7 @@ function Header (){
                     fontSize='1.5rem'
                     fontWeight='700'
                     padding='1rem'
-                >CHAT-UTELVT</Text>
+                >Chat_U</Text>
             </Box>
         </>
     )

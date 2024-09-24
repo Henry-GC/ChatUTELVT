@@ -9,7 +9,6 @@ function App() {
       <Box
           className='app-container'
           display='flex'
-          minHeight='100vh'
       >
         <SideBar/>
         <Main/>
