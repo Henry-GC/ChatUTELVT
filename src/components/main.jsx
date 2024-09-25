@@ -1,5 +1,5 @@
-import { Box, Button, Spinner, Text } from "@chakra-ui/react"
-import React, { useState, useRef, useEffect } from "react"
+import { Box, Button } from "@chakra-ui/react"
+import React, { useState } from "react"
 import Header from "./header"
 import Axios from "../utils/axiosConfig"
 import Chat from "./chat"
@@ -21,26 +21,20 @@ function Main({isOpen, onOpen}) {
         const question = query
         setQuery('')
         
-        // Guardar el mensaje del usuario en el historial
         setHistory(prevHistory => [...prevHistory, { type: 'user', message: question }])
         
         try {
             const response = await Axios.post('/query', { 'question': question })
-            const botResponse = response.data.respuesta
             
-            // Guardar la respuesta del bot en el historial
+            const botResponse = response.data.respuesta
             setHistory(prevHistory => [...prevHistory, { type: 'bot', message: botResponse }])
         } catch (error) {
             console.error("Error fetching response:", error)
-            // En caso de error, mostrar un mensaje de error del bot
             setHistory(prevHistory => [...prevHistory, { type: 'bot', message: "Error al obtener respuesta." }])
         }
         
         setLoading(false)
     }
-
-    // Hacer scroll automático cuando cambie el historial
-    
 
     return (
         <>
@@ -54,13 +48,7 @@ function Main({isOpen, onOpen}) {
                 borderLeft='1px solid #eee'
                 overflow='hidden'
             >
-                <Box
-                    display='flex'
-                    alignItems='center'
-                    height='10%'
-                >
-                    <Header isOpen={isOpen} onOpen={onOpen}/>
-                </Box>
+                <Header isOpen={isOpen} onOpen={onOpen}/>
                 <Chat history={history} isLoading={isLoading}/>
                 <Box
                     display='flex'

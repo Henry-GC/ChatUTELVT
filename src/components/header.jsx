@@ -1,4 +1,5 @@
-import { Box, Button, Text } from "@chakra-ui/react"
+import { Box, Button, IconButton, Text } from "@chakra-ui/react"
+import { FaBars } from "react-icons/fa"
 
 function Header ({onOpen}){
     return (
@@ -6,13 +7,14 @@ function Header ({onOpen}){
             <Box
                 className="header-container"
                 display='flex'
+                height='5%'
             >
-                <Button display={{base:'block', md:'none'}} onClick={onOpen}> Open </Button>
+                <Button display={{base:'block', md:'none'}} onClick={onOpen}>{<FaBars/>}</Button>
                 <Text
-                    fontSize='1.5rem'
+                    fontSize='1.2rem'
                     fontWeight='700'
-                    padding='1rem'
-                >Chat_U</Text>
+                    margin='auto 1rem'
+                >Asistente virtual UTELVT</Text>
             </Box>
         </>
     )
