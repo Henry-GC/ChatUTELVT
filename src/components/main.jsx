@@ -5,7 +5,7 @@ import Axios from "../utils/axiosConfig"
 import Chat from "./chat"
 import '../styles/main.css'
 
-function Main() {
+function Main({isOpen, onOpen}) {
     const [isLoading, setLoading] = useState(false)
     const [query, setQuery] = useState('')
     const [history, setHistory] = useState([])
@@ -46,8 +46,8 @@ function Main() {
         <>
             <Box
                 className="main-container"
-                width='80%'
-                maxHeight='100vh'
+                minW='100%'
+                height='100%'
                 display='flex'
                 flexDirection='column'
                 bg='#fff'
@@ -59,7 +59,7 @@ function Main() {
                     alignItems='center'
                     height='10%'
                 >
-                    <Header />
+                    <Header isOpen={isOpen} onOpen={onOpen}/>
                 </Box>
                 <Chat history={history} isLoading={isLoading}/>
                 <Box

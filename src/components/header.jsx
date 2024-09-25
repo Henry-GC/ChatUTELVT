@@ -1,11 +1,13 @@
-import { Box, Text } from "@chakra-ui/react"
+import { Box, Button, Text } from "@chakra-ui/react"
 
-function Header (){
+function Header ({onOpen}){
     return (
         <>
             <Box
                 className="header-container"
+                display='flex'
             >
+                <Button display={{base:'block', md:'none'}} onClick={onOpen}> Open </Button>
                 <Text
                     fontSize='1.5rem'
                     fontWeight='700'

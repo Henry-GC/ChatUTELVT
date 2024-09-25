@@ -15,7 +15,7 @@ function Chat ({isLoading,history}) {
         <>
             <Box
                 className="chat-box"
-                height='80%'
+                minHeight='80%'
                 bg='#eee'
                 padding="1rem"
                 overflowY='scroll'

@@ -1,18 +1,11 @@
-import { ChakraProvider, Box } from '@chakra-ui/react';
+import { ChakraProvider } from '@chakra-ui/react';
 import './App.css';
-import Main from './components/main';
-import SideBar from './components/sidebar';
+import Landing from './components/Landing';
 
 function App() {
   return (
     <ChakraProvider>
-      <Box
-          className='app-container'
-          display='flex'
-      >
-        <SideBar/>
-        <Main/>
-      </Box>
+      <Landing/>
     </ChakraProvider>
   );
 }
