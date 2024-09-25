@@ -6,8 +6,7 @@ import {
     Text,
     useColorModeValue
   } from '@chakra-ui/react';
-  import { AiOutlineTeam, AiOutlineHome } from 'react-icons/ai';
-  import { BsFolder2, BsCalendarCheck } from 'react-icons/bs';
+  import { AiOutlineHome } from 'react-icons/ai';
   import { FaRobot } from 'react-icons/fa';
 
 export default function SideBar (props){
