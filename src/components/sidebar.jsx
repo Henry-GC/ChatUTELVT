@@ -1,6 +1,7 @@
 import React from "react"
 import {
     Box,
+    Button,
     Flex,
     Icon,
     Text,
@@ -10,7 +11,8 @@ import {
   import { FaRobot } from 'react-icons/fa';
 
 export default function SideBar (props){
-    
+    const {w,borderRight,newConversation} = props
+    const cssProp = {w:w,borderRight:borderRight}
     return (
         <Box
             as="nav"
@@ -40,10 +42,33 @@ export default function SideBar (props){
             </Flex>
             <Flex direction="column" as="nav" fontSize="md" color="gray.600" aria-label="Main Navigation">
                 <NavItem icon={AiOutlineHome}>Asistente Virtual UTELVT</NavItem>
-                {/* <NavItem icon={AiOutlineTeam}>Team</NavItem>
-                <NavItem icon={BsFolder2}>Projects</NavItem>
-                <NavItem icon={BsCalendarCheck}>Calendar</NavItem> */}
+                {/* <NavItem icon={AiOutlineHome}>Asistente Virtual PUCESE</NavItem> */}
             </Flex>
+            <Box
+                display='flex'
+                justifyContent='center'
+                mt='0.5rem'
+                mb='1rem'
+            >
+                <Button
+                    bg='#333'
+                    color='#fff'
+                    sx={{ _hover: { bg: '#555' } }}
+                    onClick={newConversation}
+                >
+                    + Nueva conversación
+                </Button>
+            </Box>
+            <Text
+                fontSize="1.5rem"
+                ml="6"
+                fontWeight="semibold"
+            >
+                Historial
+            </Text>
+            <Box>
+
+            </Box>
         </Box>
     )
 }

@@ -21,6 +21,10 @@ function Chat ({isLoading,history}) {
                 overflowY='scroll'
                 display="flex"
                 flexDirection="column"
+                backgroundImage='/multimedia/utelvt.png'
+                backgroundRepeat='no-repeat'
+                backgroundSize='30%'
+                backgroundPosition='center center'
                 ref={chatBoxRef} // Referencia para la caja de chat
             >
                 {history.map((entry, index) => (
