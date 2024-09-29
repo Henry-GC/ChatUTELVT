@@ -1,7 +1,7 @@
 import { Box, Text, Spinner } from "@chakra-ui/react"
 import { useEffect, useRef } from "react"
 
-function Chat ({isLoading,history}) {
+function Chat ({isLoading,history,imgBg}) {
     
     const chatBoxRef = useRef(null)
 
@@ -21,7 +21,7 @@ function Chat ({isLoading,history}) {
                 overflowY='scroll'
                 display="flex"
                 flexDirection="column"
-                backgroundImage='/multimedia/utelvt.png'
+                backgroundImage={imgBg}
                 backgroundRepeat='no-repeat'
                 backgroundSize='30%'
                 backgroundPosition='center center'

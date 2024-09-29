@@ -9,10 +9,10 @@ import {
   } from '@chakra-ui/react';
   import { AiOutlineHome } from 'react-icons/ai';
   import { FaRobot } from 'react-icons/fa';
+import { Link } from "react-router-dom";
 
 export default function SideBar (props){
-    const {w,borderRight,newConversation} = props
-    const cssProp = {w:w,borderRight:borderRight}
+    const {newConversation, ...rest} = props
     return (
         <Box
             as="nav"
@@ -27,7 +27,7 @@ export default function SideBar (props){
             borderColor={useColorModeValue('inherit', 'gray.700')}
             borderRightWidth="1px"
             w='20%'
-            {...props}
+            {...rest}
         >
             <Flex px="4" py="5" align="center">
                 <Icon as={FaRobot} h={8} w={8} />
@@ -37,31 +37,49 @@ export default function SideBar (props){
                     color={useColorModeValue('brand.500', 'white')}
                     fontWeight="semibold"
                 >
-                    Chat_U
+                    ChatUNI
                 </Text>
             </Flex>
+            <Box
+                display='flex'
+                justifyContent='center'
+            >
+                <Link to='/newChat'>
+                    <Button
+                        bg='#333'
+                        color='#fff'
+                        sx={{ _hover: { bg: '#555' } }}
+                    >
+                      + Nueva conversación
+                    </Button>
+                </Link>
+            </Box>
             <Flex direction="column" as="nav" fontSize="md" color="gray.600" aria-label="Main Navigation">
-                <NavItem icon={AiOutlineHome}>Asistente Virtual UTELVT</NavItem>
+                <Link to='/'>
+                    <NavItem icon={AiOutlineHome}>Asistente Virtual UTELVT</NavItem>
+                </Link>
                 {/* <NavItem icon={AiOutlineHome}>Asistente Virtual PUCESE</NavItem> */}
             </Flex>
-            <Box
+            {/* <Box
                 display='flex'
                 justifyContent='center'
                 mt='0.5rem'
                 mb='1rem'
             >
-                <Button
-                    bg='#333'
-                    color='#fff'
-                    sx={{ _hover: { bg: '#555' } }}
-                    onClick={newConversation}
-                >
-                    + Nueva conversación
-                </Button>
-            </Box>
+                <Link to='/newChat'>
+                    <Button
+                        bg='#333'
+                        color='#fff'
+                        sx={{ _hover: { bg: '#555' } }}
+                    >
+                      + Nueva conversación
+                    </Button>
+                </Link>
+            </Box> */}
             <Text
                 fontSize="1.5rem"
                 ml="6"
+                mt='1rem'
                 fontWeight="semibold"
             >
                 Historial
