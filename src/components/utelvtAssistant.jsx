@@ -12,7 +12,7 @@ function LvtAssistant (props) {
                         margin='auto 1rem'
                 >Asistente virtual UTELVT</Text>
             </Header>
-            <Chat imgBg='/multimedia/utelvt.png' history={props.history} isLoading={props.isLoading}/>
+            <Chat botResponse={props.botResponse} imgBg='/multimedia/utelvt.png' history={props.history} isLoading={props.isLoading}/>
         </>
     )
 }

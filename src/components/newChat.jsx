@@ -16,7 +16,7 @@ export default function NewChat (props) {
                     <option>Groq</option>
                 </Select>
             </Header>
-            <Chat imgBg='none' history={props.history} isLoading={props.isLoading}/>
+            <Chat botResponse={props.botResponse} imgBg='none' history={props.history} isLoading={props.isLoading}/>
         </>
     )
 }

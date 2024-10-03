@@ -1,7 +1,7 @@
 import { Box, Text, Spinner } from "@chakra-ui/react"
 import { useEffect, useRef } from "react"
 
-function Chat ({isLoading,history,imgBg}) {
+function Chat ({botResponse,isLoading,history,imgBg}) {
     
     const chatBoxRef = useRef(null)
 
@@ -46,6 +46,24 @@ function Chat ({isLoading,history,imgBg}) {
                         </Box>
                     </Box>
                 ))}
+                {botResponse && (
+                    <Box
+                    display="flex"
+                    justifyContent='flex-start'
+                    padding="0.5rem"
+                    >
+                        <Box
+                            bg='#E2E8F0'
+                            color='#000'
+                            borderRadius="10px"
+                            padding="0.5rem 1rem"
+                            maxWidth="60%"
+                            textAlign='left'
+                        >
+                            <Text>{botResponse}</Text>
+                        </Box>
+                    </Box>
+                )}
                 {isLoading && (
                     <Box display="flex" padding="1rem">
                         <Spinner size="lg" />

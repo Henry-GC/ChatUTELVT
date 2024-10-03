@@ -1,6 +1,5 @@
 import { Box, Button } from "@chakra-ui/react"
 import React, { useState } from "react"
-import Axios from "../utils/axiosConfig"
 import '../styles/main.css'
 import LvtAssistant from "./utelvtAssistant"
 import NewChat from "./newChat"
@@ -9,6 +8,7 @@ import { Route, Routes } from "react-router-dom"
 export default function Main({isOpen, onOpen}) {
     const [isLoading, setLoading] = useState(false)
     const [query, setQuery] = useState('')
+    const [botResponse, setBotResponse] = useState('')
     const [history, setHistory] = useState([])
 
     function handleChange(e) {
@@ -25,15 +25,32 @@ export default function Main({isOpen, onOpen}) {
         setHistory(prevHistory => [...prevHistory, { type: 'user', message: question }])
         
         try {
-            const response = await Axios.post('/query', { 'question': question })
-            
-            const botResponse = response.data.respuesta
-            setHistory(prevHistory => [...prevHistory, { type: 'bot', message: botResponse }])
+            const response = await fetch("https://api-chat-utelvt.vercel.app/query",{
+                method: 'POST',
+                body: JSON.stringify({question:question}),
+                headers: {
+                  "Content-Type":"application/json",
+                },
+                credentials: 'include'
+              })
+            const reader = response.body.getReader()
+            let fullResponse = ''
+            while (true){
+                const {done,value} = await reader.read()
+                if(done){
+                    break;
+                }
+                const text = new TextDecoder().decode(value)
+                setBotResponse((prevData)=> prevData + text)
+                fullResponse += text
+            }
+            // setBotResponse('')
+            setHistory(prevHistory => [...prevHistory, { type: 'bot', message: fullResponse }])
         } catch (error) {
             console.error("Error fetching response:", error)
             setHistory(prevHistory => [...prevHistory, { type: 'bot', message: "Error al obtener respuesta." }])
         }
-        
+        setBotResponse('')
         setLoading(false)
     }
 
@@ -56,6 +73,7 @@ export default function Main({isOpen, onOpen}) {
                             isOpen={isOpen}
                             onOpen={onOpen}
                             history={history}
+                            botResponse={botResponse}
                             isLoading={isLoading}/>}
                     />
                     <Route
@@ -64,6 +82,7 @@ export default function Main({isOpen, onOpen}) {
                             isOpen={isOpen}
                             onOpen={onOpen}
                             history={history}
+                            botResponse={botResponse}
                             isLoading={isLoading}/>}
                     />
                 </Routes>
