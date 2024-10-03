@@ -40,6 +40,12 @@ export default function SideBar (props){
                     ChatUNI
                 </Text>
             </Flex>
+            <Flex direction="column" as="nav" fontSize="md" color="gray.600" aria-label="Main Navigation">
+                <Link to='/'>
+                    <NavItem icon={AiOutlineHome}>Asistente Virtual UTELVT</NavItem>
+                </Link>
+                {/* <NavItem icon={AiOutlineHome}>Asistente Virtual PUCESE</NavItem> */}
+            </Flex>
             <Box
                 display='flex'
                 justifyContent='center'
@@ -54,12 +60,12 @@ export default function SideBar (props){
                     </Button>
                 </Link>
             </Box>
-            <Flex direction="column" as="nav" fontSize="md" color="gray.600" aria-label="Main Navigation">
+            {/* <Flex direction="column" as="nav" fontSize="md" color="gray.600" aria-label="Main Navigation">
                 <Link to='/'>
                     <NavItem icon={AiOutlineHome}>Asistente Virtual UTELVT</NavItem>
                 </Link>
-                {/* <NavItem icon={AiOutlineHome}>Asistente Virtual PUCESE</NavItem> */}
-            </Flex>
+                <NavItem icon={AiOutlineHome}>Asistente Virtual PUCESE</NavItem>
+            </Flex> */}
             {/* <Box
                 display='flex'
                 justifyContent='center'

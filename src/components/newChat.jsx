@@ -1,20 +1,16 @@
 import Header from "./header";
 import Chat from "./chat";
-import { Select } from "@chakra-ui/react";
+import { Select, Text } from "@chakra-ui/react";
 
 export default function NewChat (props) {
     return(
         <>
             <Header isOpen={props.isOpen} onOpen={props.onOpen}>
-                <Select
-                    fontSize='1rem'
+                <Text
+                    fontSize='1.2rem'
                     fontWeight='700'
                     margin='auto 1rem'
-                    width='fit-content'
-                >
-                    <option defaultValue>LLaMa 3.1</option>
-                    <option>Groq</option>
-                </Select>
+                >Nueva Conversación</Text>
             </Header>
             <Chat botResponse={props.botResponse} imgBg='none' history={props.history} isLoading={props.isLoading}/>
         </>

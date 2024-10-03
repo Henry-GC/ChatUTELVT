@@ -1,5 +1,6 @@
 import { Box, Text, Spinner } from "@chakra-ui/react"
 import { useEffect, useRef } from "react"
+import ReactMarkdown from "react-markdown"
 
 function Chat ({botResponse,isLoading,history,imgBg}) {
     
@@ -9,7 +10,7 @@ function Chat ({botResponse,isLoading,history,imgBg}) {
         if (chatBoxRef.current) {
             chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight
         }
-    }, [history])
+    }, [history,botResponse])
 
     return (
         <>
@@ -41,8 +42,10 @@ function Chat ({botResponse,isLoading,history,imgBg}) {
                             padding="0.5rem 1rem"
                             maxWidth="60%"
                             textAlign={entry.type === 'user' ? 'right' : 'left'}
+                            whiteSpace='pre-line'
                         >
-                            <Text>{entry.message}</Text>
+                            <ReactMarkdown>{entry.message}</ReactMarkdown>
+                            {/* <Text></Text> */}
                         </Box>
                     </Box>
                 ))}
@@ -59,8 +62,10 @@ function Chat ({botResponse,isLoading,history,imgBg}) {
                             padding="0.5rem 1rem"
                             maxWidth="60%"
                             textAlign='left'
+                            whiteSpace='pre-line'
                         >
-                            <Text>{botResponse}</Text>
+                            <ReactMarkdown>{botResponse}</ReactMarkdown>
+                            {/* <Text>{botResponse}</Text> */}
                         </Box>
                     </Box>
                 )}

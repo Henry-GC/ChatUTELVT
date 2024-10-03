@@ -40,6 +40,9 @@ export default function Main({isOpen, onOpen}) {
                 if(done){
                     break;
                 }
+                if(value){
+                    setLoading(false);
+                }
                 const text = new TextDecoder().decode(value)
                 setBotResponse((prevData)=> prevData + text)
                 fullResponse += text
