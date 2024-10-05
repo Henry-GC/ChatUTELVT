@@ -10,6 +10,7 @@ export default function Main({isOpen, onOpen}) {
     const [query, setQuery] = useState('')
     const [botResponse, setBotResponse] = useState('')
     const [history, setHistory] = useState([])
+    const [chats, setChats] = useState([])
 
     function handleChange(e) {
         setQuery(e.target.value)
@@ -25,7 +26,7 @@ export default function Main({isOpen, onOpen}) {
         setHistory(prevHistory => [...prevHistory, { type: 'user', message: question }])
         
         try {
-            const response = await fetch("https://api-chat-utelvt.vercel.app/query",{
+            const response = await fetch("https://api-chat-utelvt.vercel.app/api/query",{
                 method: 'POST',
                 body: JSON.stringify({question:question}),
                 headers: {
@@ -84,7 +85,7 @@ export default function Main({isOpen, onOpen}) {
                         element={<NewChat
                             isOpen={isOpen}
                             onOpen={onOpen}
-                            history={history}
+                            history={chats}
                             botResponse={botResponse}
                             isLoading={isLoading}/>}
                     />
