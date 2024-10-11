@@ -14,9 +14,6 @@ import SideBar from './sidebar';
 export default function Landing() {
   const { isOpen, onClose, onOpen } = useDisclosure();
 
-  const newConversation = () => {
-  }
-
   return (
     <Box display='flex' bg={useColorModeValue('gray.50', 'gray.700')} minH="100vh" maxW='100vw'>
       <SideBar display={{ base: 'none', md: 'unset' }} />
@@ -25,7 +22,7 @@ export default function Landing() {
         <DrawerContent>
           <DrawerCloseButton/>
           <DrawerBody>
-            <SideBar w="full" borderRight="none" newConversation={newConversation}/>
+            <SideBar w="full" borderRight="none"/>
           </DrawerBody>
         </DrawerContent>
       </Drawer>

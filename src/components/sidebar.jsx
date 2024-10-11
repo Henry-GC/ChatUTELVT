@@ -8,11 +8,15 @@ import {
     useColorModeValue
   } from '@chakra-ui/react';
   import { AiOutlineHome } from 'react-icons/ai';
-  import { FaRobot } from 'react-icons/fa';
+  import { FaRobot, FaPlus } from 'react-icons/fa';
 import { Link } from "react-router-dom";
+import { useChat } from "./Hooks/useChat";
 
 export default function SideBar (props){
     const {newConversation, ...rest} = props
+    const {conversations} = useChat()
+    console.log(conversations);
+    
     return (
         <Box
             as="nav"
@@ -37,51 +41,17 @@ export default function SideBar (props){
                     color={useColorModeValue('brand.500', 'white')}
                     fontWeight="semibold"
                 >
-                    ChatUNI
+                    ChatLVT
                 </Text>
             </Flex>
             <Flex direction="column" as="nav" fontSize="md" color="gray.600" aria-label="Main Navigation">
                 <Link to='/'>
+                    <NavItem icon={FaPlus}>Nueva conversación</NavItem>
+                </Link>
+                <Link to='/asistente'>
                     <NavItem icon={AiOutlineHome}>Asistente Virtual UTELVT</NavItem>
                 </Link>
-                {/* <NavItem icon={AiOutlineHome}>Asistente Virtual PUCESE</NavItem> */}
             </Flex>
-            <Box
-                display='flex'
-                justifyContent='center'
-            >
-                <Link to='/newChat'>
-                    <Button
-                        bg='#333'
-                        color='#fff'
-                        sx={{ _hover: { bg: '#555' } }}
-                    >
-                      + Nueva conversación
-                    </Button>
-                </Link>
-            </Box>
-            {/* <Flex direction="column" as="nav" fontSize="md" color="gray.600" aria-label="Main Navigation">
-                <Link to='/'>
-                    <NavItem icon={AiOutlineHome}>Asistente Virtual UTELVT</NavItem>
-                </Link>
-                <NavItem icon={AiOutlineHome}>Asistente Virtual PUCESE</NavItem>
-            </Flex> */}
-            {/* <Box
-                display='flex'
-                justifyContent='center'
-                mt='0.5rem'
-                mb='1rem'
-            >
-                <Link to='/newChat'>
-                    <Button
-                        bg='#333'
-                        color='#fff'
-                        sx={{ _hover: { bg: '#555' } }}
-                    >
-                      + Nueva conversación
-                    </Button>
-                </Link>
-            </Box> */}
             <Text
                 fontSize="1.5rem"
                 ml="6"
@@ -91,7 +61,11 @@ export default function SideBar (props){
                 Historial
             </Text>
             <Box>
-
+                {conversations.map((conversation,index)=>(
+                    <Link to='/chat' key={index}>
+                        <NavItem>{conversation.title}</NavItem>
+                    </Link>
+                ))}
             </Box>
         </Box>
     )
