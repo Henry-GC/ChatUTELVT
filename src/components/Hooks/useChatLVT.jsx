@@ -8,7 +8,7 @@ export function useChatLVT () {
     const [historyLVT,setHistoryLVT] = useState([])
 
     const fetchHistoryLVT = async () => {
-        const response = await fetch("https://api-chat-utelvt.vercel.app/historyLVT",{
+        const response = await fetch("https://api-chat-utelvt.vercel.app/api/historyLVT",{
             method: "GET",
             headers: {
                 "Content-Type":"application/json"
