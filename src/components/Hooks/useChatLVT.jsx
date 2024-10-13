@@ -8,13 +8,14 @@ export function useChatLVT () {
     const [historyLVT,setHistoryLVT] = useState([])
 
     const fetchHistoryLVT = async () => {
-        const response = await fetch("https://api-chat-utelvt.vercel.app/api/chat/historyLVT",{
+        const response = await fetch("https://api-chat-utelvt.vercel.app/historyLVT",{
             method: "GET",
             headers: {
                 "Content-Type":"application/json"
             },
             credentials: "include"})
         const data = await response.json();
+        
         if (data.conversations) {
             setHistoryLVT(data.conversations.chats)
         }

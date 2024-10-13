@@ -1,5 +1,5 @@
 import { Box } from "@chakra-ui/react"
-import React, { useState } from "react"
+import React from "react"
 import './Assets/main.css'
 import LvtAssistant from "./Routes/utelvtAssistant"
 import NewChat from "./Routes/newChat"
@@ -10,12 +10,15 @@ import { useChat } from "./Hooks/useChat"
 import { useNewChat } from "./Hooks/useNewChat"
 
 export default function Main({isOpen, onOpen}) {
-    const {historyNewChat} = useNewChat()
+    const { 
+            handleNewChange,
+            handleNewSubmit
+        } = useNewChat()
     const {
             query,
             queryDisplay,
             botResponse,
-            history,
+            conversations,
             isLoading,
             handleChange,
             handleSubmit
@@ -48,27 +51,26 @@ export default function Main({isOpen, onOpen}) {
                         element={<New
                             isOpen={isOpen}
                             onOpen={onOpen}
-                            history={historyNewChat}
-                            queryDisplay={queryDisplay}
-                            botResponse={botResponse}
-                            handleChange={handleChange}
-                            handleSubmit={handleSubmit}
-                            query={query}
+                            handleChange={handleNewChange}
+                            handleSubmit={handleNewSubmit}
                             isLoading={isLoading}/>}
                     />
-                    <Route
-                        path="/chat"
-                        element={<NewChat
-                            isOpen={isOpen}
-                            onOpen={onOpen}
-                            history={history}
-                            queryDisplay={queryDisplay}
-                            botResponse={botResponse}
-                            handleChange={handleChange}
-                            handleSubmit={handleSubmit}
-                            query={query}
-                            isLoading={isLoading}/>}
-                    />
+                    {conversations.map((conversation)=>(
+                        <Route
+                            key={conversation.conversationId}
+                            path={`/chat/${conversation.conversationId}`}
+                            element={<NewChat
+                                isOpen={isOpen}
+                                onOpen={onOpen}
+                                history={conversation.chats}
+                                queryDisplay={queryDisplay}
+                                botResponse={botResponse}
+                                handleChange={handleChange}
+                                handleSubmit={handleSubmit}
+                                query={query}
+                                isLoading={isLoading}/>}
+                        />
+                    ))}
                     <Route
                         path="/asistente"
                         element={<LvtAssistant

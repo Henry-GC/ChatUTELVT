@@ -20,6 +20,7 @@ export function useChat () {
         if (data.history) {
             setHistory(data.history.conversations[0].chats)
             setConversations(data.history.conversations)
+            console.log(conversations);
         }
     }
 
@@ -39,7 +40,7 @@ export function useChat () {
         setQuery('')
                 
         try {
-            const response = await fetch("https://api-chat-utelvt.vercel.app/api/newchat",{
+            const response = await fetch("https://api-chat-utelvt.vercel.app/api/chat",{
                 method: 'POST',
                 body: JSON.stringify({question:question}),
                 headers: {
@@ -77,5 +78,10 @@ export function useChat () {
             queryDisplay,
             botResponse,
             handleChange,
-            handleSubmit}
+            handleSubmit,
+            setLoading,
+            setBotResponse,
+            setHistory,
+            fetchHistory
+        }
 }

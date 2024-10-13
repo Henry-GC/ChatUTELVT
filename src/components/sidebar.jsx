@@ -60,13 +60,13 @@ export default function SideBar (props){
             >
                 Historial
             </Text>
-            <Box>
+            <Flex direction="column" as="nav" fontSize="md" color="gray.600" aria-label="Main Navigation">
                 {conversations.map((conversation,index)=>(
-                    <Link to='/chat' key={index}>
+                    <Link to={`/chat/${conversation.conversationId}`} key={index}>
                         <NavItem>{conversation.title}</NavItem>
                     </Link>
                 ))}
-            </Box>
+            </Flex>
         </Box>
     )
 }

@@ -19,6 +19,7 @@ export default function New (props) {
                 handleSubmit={props.handleSubmit}
                 query={props.query}
                 isLoading={props.isLoading}
+                
             />
         </>
     )
