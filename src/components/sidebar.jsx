@@ -1,7 +1,6 @@
-import React from "react"
+import React, { useContext, useEffect, useRef } from "react"
 import {
     Box,
-    Button,
     Flex,
     Icon,
     Text,
@@ -9,24 +8,33 @@ import {
   } from '@chakra-ui/react';
   import { AiOutlineHome } from 'react-icons/ai';
   import { FaRobot, FaPlus } from 'react-icons/fa';
-import { Link } from "react-router-dom";
-import { useChat } from "./Hooks/useChat";
+import { Link, useLocation } from "react-router-dom";
+import { historyContext } from "./Context/historyContext"
 
 export default function SideBar (props){
     const {newConversation, ...rest} = props
-    const {conversations} = useChat()
-    console.log(conversations);
-    
+    const historyRef = useRef(null)
+    const {history} = useContext(historyContext)
+    const location = useLocation()
+
+    // useEffect(() => {
+    //   if (historyRef.current) {
+    //     historyRef.current.scrollTo({
+    //       top: historyRef.current.scrollHeight,
+    //       behavior: 'smooth'
+    //     });
+    //   }
+    // }, [history]);
+
     return (
         <Box
             as="nav"
             top="0"
             left="0"
             zIndex="sticky"
-            h="100vh"
+            maxH="100vh"
             pb="10"
             overflowX="hidden"
-            overflowY="auto"
             bg={useColorModeValue('white', 'gray.800')}
             borderColor={useColorModeValue('inherit', 'gray.700')}
             borderRightWidth="1px"
@@ -46,10 +54,10 @@ export default function SideBar (props){
             </Flex>
             <Flex direction="column" as="nav" fontSize="md" color="gray.600" aria-label="Main Navigation">
                 <Link to='/'>
-                    <NavItem icon={FaPlus}>Nueva conversación</NavItem>
+                    <NavItem icon={FaPlus} isActive={location.pathname === '/'}>Nueva conversación</NavItem>
                 </Link>
                 <Link to='/asistente'>
-                    <NavItem icon={AiOutlineHome}>Asistente Virtual UTELVT</NavItem>
+                    <NavItem icon={AiOutlineHome} isActive={location.pathname === '/asistente'}>Asistente Virtual UTELVT</NavItem>
                 </Link>
             </Flex>
             <Text
@@ -60,10 +68,19 @@ export default function SideBar (props){
             >
                 Historial
             </Text>
-            <Flex direction="column" as="nav" fontSize="md" color="gray.600" aria-label="Main Navigation">
-                {conversations.map((conversation,index)=>(
+            <Flex
+                direction='column-reverse'
+                as="nav"
+                fontSize="md" 
+                color="gray.600" 
+                aria-label="Main Navigation"
+                overflowY='scroll'
+                maxHeight='70%'
+                ref={historyRef}
+            >
+                {history.map((conversation,index)=>(
                     <Link to={`/chat/${conversation.conversationId}`} key={index}>
-                        <NavItem>{conversation.title}</NavItem>
+                        <NavItem isActive={location.pathname === `/chat/${conversation.conversationId}`}>{conversation.title}</NavItem>
                     </Link>
                 ))}
             </Flex>
@@ -72,9 +89,12 @@ export default function SideBar (props){
 }
 
 const NavItem = (props) => {
+    const { icon, children, isActive } = props;
     const color = useColorModeValue('gray.600', 'gray.300');
+    const activeBg = useColorModeValue('gray.100', 'gray.900')
+    const activeColor = useColorModeValue('gray.900', 'gray.400')
+    const inactiveColor = useColorModeValue('inherit', 'gray.400')
   
-    const { icon, children } = props;
     return (
       <Flex
         align="center"
@@ -84,10 +104,11 @@ const NavItem = (props) => {
         role="group"
         fontWeight="semibold"
         transition=".15s ease"
-        color={useColorModeValue('inherit', 'gray.400')}
+        bg={isActive ? activeBg : 'transparent'}
+        color={isActive ? activeColor : inactiveColor}
         _hover={{
-          bg: useColorModeValue('gray.100', 'gray.900'),
-          color: useColorModeValue('gray.900', 'gray.200')
+          bg: activeBg,
+          color: activeColor
         }}
       >
         {icon && (

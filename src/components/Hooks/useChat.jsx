@@ -1,12 +1,12 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
+import { historyContext } from "../Context/historyContext"
 
 export function useChat () {
     const [isLoading, setLoading] = useState(false)
     const [query, setQuery] = useState('')
     const [queryDisplay,setQueryDisplay] = useState('')
     const [botResponse, setBotResponse] = useState('')
-    const [history,setHistory] = useState([])
-    const [conversations, setConversations] = useState([])
+    const {history,setHistory} = useContext(historyContext)
 
     const fetchHistory = async () => {
         const response = await fetch("https://api-chat-utelvt.vercel.app/api/chat/history",{
@@ -18,9 +18,7 @@ export function useChat () {
         const data = await response.json();
         
         if (data.history) {
-            setHistory(data.history.conversations[0].chats)
-            setConversations(data.history.conversations)
-            console.log(conversations);
+            setHistory(data.history.conversations)
         }
     }
 
@@ -32,7 +30,7 @@ export function useChat () {
         setQuery(e.target.value)
     }
 
-    async function handleSubmit(e) {
+    async function handleSubmit(e, conversationId) {
         e.preventDefault()
         setLoading(true)
         setQueryDisplay(query)
@@ -42,7 +40,7 @@ export function useChat () {
         try {
             const response = await fetch("https://api-chat-utelvt.vercel.app/api/chat",{
                 method: 'POST',
-                body: JSON.stringify({question:question}),
+                body: JSON.stringify({question:question, conversationId}),
                 headers: {
                   "Content-Type":"application/json",
                 },
@@ -62,7 +60,27 @@ export function useChat () {
                 setBotResponse((prevData)=> prevData + text)
                 fullResponse += text
             }
-            setHistory(prevHistory => [...prevHistory, {question: question, response: fullResponse, timestamp: new Date()}])
+
+            setHistory((prevHistory) => {
+                const updatedHistory = prevHistory.map((conversation) => {
+                    if (conversation.conversationId === conversationId) {
+                        return {
+                            ...conversation,
+                            chats: [
+                                ...conversation.chats,
+                                {
+                                question: question,
+                                response: fullResponse,
+                                timestamp: new Date(),
+                                },
+                            ],
+                        };
+                    }
+                    return conversation;
+                });
+                return updatedHistory;
+            });
+
         } catch (error) {
             console.error("Error fetching response:", error)
         }
@@ -73,15 +91,12 @@ export function useChat () {
 
     return {query,
             history,
-            conversations,
             isLoading,
             queryDisplay,
             botResponse,
             handleChange,
             handleSubmit,
             setLoading,
-            setBotResponse,
-            setHistory,
-            fetchHistory
+            setBotResponse
         }
 }

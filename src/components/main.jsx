@@ -2,7 +2,7 @@ import { Box } from "@chakra-ui/react"
 import React from "react"
 import './Assets/main.css'
 import LvtAssistant from "./Routes/utelvtAssistant"
-import NewChat from "./Routes/newChat"
+import NewChat from "./Routes/chatBot"
 import New from "./Routes/new"
 import { Route, Routes } from "react-router-dom"
 import { useChatLVT } from "./Hooks/useChatLVT"
@@ -11,14 +11,18 @@ import { useNewChat } from "./Hooks/useNewChat"
 
 export default function Main({isOpen, onOpen}) {
     const { 
+            question,
             handleNewChange,
-            handleNewSubmit
+            handleNewSubmit,
+            botResponseNew,
+            queryDisplayNew,
+            isLoadingNew
         } = useNewChat()
     const {
             query,
             queryDisplay,
             botResponse,
-            conversations,
+            history,
             isLoading,
             handleChange,
             handleSubmit
@@ -53,9 +57,10 @@ export default function Main({isOpen, onOpen}) {
                             onOpen={onOpen}
                             handleChange={handleNewChange}
                             handleSubmit={handleNewSubmit}
-                            isLoading={isLoading}/>}
+                            query={question}
+                            isLoading={isLoadingNew}/>}
                     />
-                    {conversations.map((conversation)=>(
+                    {history.map((conversation)=>(
                         <Route
                             key={conversation.conversationId}
                             path={`/chat/${conversation.conversationId}`}
@@ -63,12 +68,12 @@ export default function Main({isOpen, onOpen}) {
                                 isOpen={isOpen}
                                 onOpen={onOpen}
                                 history={conversation.chats}
-                                queryDisplay={queryDisplay}
-                                botResponse={botResponse}
+                                queryDisplay={queryDisplay || queryDisplayNew}
+                                botResponse={botResponse || botResponseNew}
                                 handleChange={handleChange}
-                                handleSubmit={handleSubmit}
+                                handleSubmit={(e) => handleSubmit(e, conversation.conversationId)}
                                 query={query}
-                                isLoading={isLoading}/>}
+                                isLoading={isLoading || isLoadingNew}/>}
                         />
                     ))}
                     <Route

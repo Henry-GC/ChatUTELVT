@@ -1,9 +1,14 @@
-import { useState } from "react"
-import { useChat } from "./useChat"
+import { useContext, useState } from "react"
+import { historyContext } from "../Context/historyContext"
+import { useNavigate } from "react-router-dom"
 
 export function useNewChat () {
     const [question,setQuestion] = useState('')
-    const {setLoading,setBotResponse,setHistory,fetchHistory} = useChat()
+    const [botResponseNew, setBotResponseNew] = useState('')
+    const [queryDisplayNew,setQueryDisplayNew] = useState('')
+    const [isLoadingNew, setLoadingNew] = useState(false)
+    const {history,setHistory} = useContext(historyContext)
+    const navigate = useNavigate()
 
     function handleNewChange(e) {
         setQuestion(e.target.value)
@@ -11,11 +16,14 @@ export function useNewChat () {
 
     const handleNewSubmit = async (e) => {
         e.preventDefault()
-        
+        setLoadingNew(true)
+        setQueryDisplayNew(question)
+        const quest = question
+
         try {
             const response = await fetch("https://api-chat-utelvt.vercel.app/api/newchat",{
                 method: 'POST',
-                body: JSON.stringify({question:question}),
+                body: JSON.stringify({question:quest}),
                 headers: {
                   "Content-Type":"application/json",
                 },
@@ -23,10 +31,19 @@ export function useNewChat () {
             })
             const {conversationId} = await response.json()
             console.log(conversationId);
-            fetchHistory()
+
+            setHistory((prevHistory) => [...prevHistory,{
+                conversationId: conversationId,
+                title: 'Titulo de prueba',
+                chats:[]
+            }]);
+
+            navigate(`/chat/${conversationId}`,{replace:true})
+            setQuestion('')
+            
             const responseChat = await fetch("https://api-chat-utelvt.vercel.app/api/chat",{
                 method: 'POST',
-                body: JSON.stringify({question:question, conversationId:conversationId}),
+                body: JSON.stringify({question:quest, conversationId:conversationId}),
                 headers: {
                     "Content-Type":"application/json",
                   },
@@ -40,16 +57,44 @@ export function useNewChat () {
                     break;
                 }
                 if(value){
-                    setLoading(false);
+                    setLoadingNew(false);
                 }
                 const text = new TextDecoder().decode(value)
-                setBotResponse((prevData)=> prevData + text)
+                setBotResponseNew((prevData)=> prevData + text)
                 fullResponse += text
             }
-            setHistory(prevHistory => [...prevHistory, {question: question, response: fullResponse, timestamp: new Date()}])
+
+            setHistory((prevHistory) => {
+                const updatedHistory = prevHistory.map((conversation) => {
+                    if (conversation.conversationId === conversationId) {
+                        return {
+                            ...conversation,
+                            chats: [
+                                ...conversation.chats,
+                                {
+                                question: quest,
+                                response: fullResponse,
+                                timestamp: new Date(),
+                                },
+                            ],
+                        };
+                    }
+                    return conversation;
+                });
+                return updatedHistory;
+            });
         } catch (error) {
             console.error("Error fetching response:", error)
         }
+        setBotResponseNew('')
+        setQueryDisplayNew('')
     }
-    return {handleNewChange,handleNewSubmit}
+    return {
+        question,
+        handleNewChange,
+        handleNewSubmit,
+        botResponseNew,
+        queryDisplayNew,
+        isLoadingNew
+    }
 }
