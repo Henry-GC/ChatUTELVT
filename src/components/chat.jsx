@@ -1,4 +1,4 @@
-import { Box, Text, Spinner } from "@chakra-ui/react"
+import { Box, Text, Spinner, Avatar } from "@chakra-ui/react"
 import { useEffect, useRef } from "react"
 import ReactMarkdown from "react-markdown"
 
@@ -28,36 +28,49 @@ function Chat ({botResponse,isLoading,history,imgBg,queryDisplay}) {
                     backgroundPosition='center center'
                     ref={chatBoxRef}
                 >
+                    <Box
+                        height='100%'
+                    >
+                    </Box>
                     {history.map((entry,index)=>(
                         <Box
                             key={index}
                             display="flex"
                             flexDirection='column'
                             padding="0.5rem"
+                            gap="1rem"
                         >
                             <Box
+                                display='flex'
                                 bg='#3182CE'
                                 color='#fff'
                                 borderRadius="10px"
                                 padding="0.5rem 1rem"
                                 maxWidth="60%"
+                                gap="1rem"
                                 textAlign='right'
                                 whiteSpace='pre-line'
                                 alignSelf='flex-end'
                             >
                                 <ReactMarkdown>{entry.question}</ReactMarkdown>
+                                <Avatar size="sm" name="User message" src="/multimedia/avatar_user.png"/>
                             </Box>
                             <Box
+                                display='flex'
                                 bg='#E2E8F0'
                                 color='#000'
                                 borderRadius="10px"
                                 padding="0.5rem 1rem"
                                 maxWidth="60%"
+                                gap="1rem"
                                 textAlign='left'
                                 whiteSpace='pre-line'
                                 alignSelf='flex-start'
                             >
-                                <ReactMarkdown>{entry.response}</ReactMarkdown>
+                                <Avatar size="sm" name="User message" src="/multimedia/avatar_bot.png"/>
+                                <Box>
+                                    <ReactMarkdown>{entry.response}</ReactMarkdown>
+                                </Box>
                             </Box>
                         </Box>
                     ))}
@@ -68,35 +81,43 @@ function Chat ({botResponse,isLoading,history,imgBg,queryDisplay}) {
                             padding="0.5rem"
                         >
                             <Box
+                                display='flex'
                                 bg='#3182CE'
                                 color='#fff'
                                 borderRadius="10px"
                                 padding="0.5rem 1rem"
                                 maxWidth="60%"
+                                gap="1rem"
                                 textAlign='right'
                                 whiteSpace='pre-line'
                                 alignSelf='flex-end'
                             >
                                 <ReactMarkdown>{queryDisplay}</ReactMarkdown>
+                                <Avatar size="sm" name="User message" src="/multimedia/avatar_user.png"/>
                             </Box>
                         </Box>
                     )}
                     {botResponse && (
                         <Box
-                        display="flex"
-                        justifyContent='flex-start'
-                        padding="0.5rem"
+                            display="flex"
+                            justifyContent='flex-start'
+                            padding="0.5rem"
                         >
                             <Box
+                                display='flex'
                                 bg='#E2E8F0'
                                 color='#000'
                                 borderRadius="10px"
                                 padding="0.5rem 1rem"
                                 maxWidth="60%"
+                                gap="1rem"
                                 textAlign='left'
                                 whiteSpace='pre-line'
                             >
-                                <ReactMarkdown>{botResponse}</ReactMarkdown>
+                                <Avatar size="sm" name="User message" src="/multimedia/avatar_bot.png"/>
+                                <Box>
+                                    <ReactMarkdown>{botResponse}</ReactMarkdown>
+                                </Box>
                             </Box>
                         </Box>
                     )}

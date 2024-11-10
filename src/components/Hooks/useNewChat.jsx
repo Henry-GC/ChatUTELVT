@@ -34,7 +34,7 @@ export function useNewChat () {
 
             setHistory((prevHistory) => [...prevHistory,{
                 conversationId: conversationId,
-                title: 'Titulo de prueba',
+                title: quest,
                 chats:[]
             }]);
 

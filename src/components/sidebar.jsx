@@ -77,6 +77,18 @@ export default function SideBar (props){
                 overflowY='scroll'
                 maxHeight='70%'
                 ref={historyRef}
+                sx={{
+                  '&::-webkit-scrollbar': {
+                      width: '6px',
+                  },
+                  '&::-webkit-scrollbar-thumb': {
+                      background: useColorModeValue('#CBD5E0', '#4A5568'),
+                      borderRadius: '10px',
+                  },
+                  '&::-webkit-scrollbar-thumb:hover': {
+                      background: useColorModeValue('#A0AEC0', '#2D3748'),
+                  },
+              }}
             >
                 {history.map((conversation,index)=>(
                     <Link to={`/chat/${conversation.conversationId}`} key={index}>
