@@ -1,4 +1,4 @@
-import { Box, Text } from "@chakra-ui/react";
+import { Avatar, Box, Text } from "@chakra-ui/react";
 
 
 export default function LandingChat () {
@@ -6,14 +6,20 @@ export default function LandingChat () {
         <>
             <Box
                 display='flex'
+                flexDirection='column'
                 height='100%'
                 alignItems='center'
                 justifyContent='center'
             >
+                <Avatar size="2x1" name="User message" src="/multimedia/avatar_bot.png"/>
                 <Text
-                    fontSize='2rem'
+                    fontSize='3rem'
                     fontWeight='700'
-                >CHAT UTELVT</Text>
+                >CHAT LVT</Text>
+                <Text
+                    fontFamily="Hi Melody"
+                    fontSize="2rem"
+                >Innovando la Universidad</Text>
             </Box>
         </>
     )

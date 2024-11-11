@@ -46,7 +46,7 @@ function Chat ({botResponse,isLoading,history,imgBg,queryDisplay}) {
                                 color='#fff'
                                 borderRadius="10px"
                                 padding="0.5rem 1rem"
-                                maxWidth="60%"
+                                maxWidth={{base: '90%', md: "60%"}}
                                 gap="1rem"
                                 textAlign='right'
                                 whiteSpace='pre-line'
@@ -61,7 +61,7 @@ function Chat ({botResponse,isLoading,history,imgBg,queryDisplay}) {
                                 color='#000'
                                 borderRadius="10px"
                                 padding="0.5rem 1rem"
-                                maxWidth="60%"
+                                maxWidth={{base: '90%', md: "60%"}}
                                 gap="1rem"
                                 textAlign='left'
                                 whiteSpace='pre-line'
@@ -86,7 +86,7 @@ function Chat ({botResponse,isLoading,history,imgBg,queryDisplay}) {
                                 color='#fff'
                                 borderRadius="10px"
                                 padding="0.5rem 1rem"
-                                maxWidth="60%"
+                                maxWidth={{base: '90%', md: "60%"}}
                                 gap="1rem"
                                 textAlign='right'
                                 whiteSpace='pre-line'
@@ -109,7 +109,7 @@ function Chat ({botResponse,isLoading,history,imgBg,queryDisplay}) {
                                 color='#000'
                                 borderRadius="10px"
                                 padding="0.5rem 1rem"
-                                maxWidth="60%"
+                                maxWidth={{base: '90%', md: "60%"}}
                                 gap="1rem"
                                 textAlign='left'
                                 whiteSpace='pre-line'
